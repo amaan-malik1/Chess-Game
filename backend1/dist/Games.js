@@ -1,15 +1,7 @@
-import WebSocket from "ws";
 import { Chess } from "chess.js";
 import { GAME_OVER, INIT_GAME, MOVE } from "./Messages.js";
-
 export class Games {
-    public player1: WebSocket;
-    public player2: WebSocket;
-    public moves: string[];
-    private board: Chess;
-    private moveCount: number;
-    private startTime: Date;
-    constructor(player1: WebSocket, player2: WebSocket) {
+    constructor(player1, player2) {
         this.player1 = player1;
         this.player2 = player2;
         this.moves = [];
@@ -21,18 +13,16 @@ export class Games {
             payload: {
                 color: "white"
             }
-        }))
+        }));
         this.player2.send(JSON.stringify({
             type: INIT_GAME,
             payload: {
                 color: "black"
             }
-        }))
+        }));
     }
-
-    makeMove(socket: WebSocket, move: { from: string, to: string }) {
+    makeMove(socket, move) {
         console.log("inside makeMove");
-
         // validate the type of move or who made the move
         if (this.moveCount % 2 === 0 && socket !== this.player1) {
             console.error("Invalid move attempt by player1");
@@ -42,19 +32,15 @@ export class Games {
             console.error("Invalid move attempt by player2");
             return;
         }
-
         console.log("did not early return");
-
         //trying to update the board
-        const result = this.board.move(move); 
+        const result = this.board.move(move);
         if (!result) {
             console.error("Invalid move:", move);
             return; // stop execution for invalid move
         }
-
         this.moveCount++;
         console.log("move successful in try block");
-
         //check the game is over?
         if (this.board.isGameOver()) {
             this.player1.send(JSON.stringify({
@@ -71,12 +57,10 @@ export class Games {
             }));
             return;
         }
-
         //if not over
         console.log(this.moveCount % 2);
         if (this.moveCount % 2 === 0) {
             console.log("sent1");
-            
             this.player2.send(JSON.stringify({
                 type: MOVE,
                 move: move,
@@ -92,3 +76,4 @@ export class Games {
         }
     }
 }
+//# sourceMappingURL=Games.js.map

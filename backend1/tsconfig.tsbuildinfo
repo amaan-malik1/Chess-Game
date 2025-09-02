@@ -1,1 +1,1 @@
-{"root":["./src/index.ts"],"version":"5.9.2"}
+{"root":["./src/gamemanager.ts","./src/games.ts","./src/messages.ts","./src/index.ts"],"version":"5.9.2"}
