@@ -1,47 +1,55 @@
 import React from "react";
-import chessBoard from '../assets/chessBoard.png'
-
+import chessBoard from "../assets/chessBoard.png";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../components/Button";
 
 export const Landing = () => {
+    const navigate = useNavigate();
+
     return (
-        <div className="landing bg-black/90 text-white">
-            <div className="landing-wrapper ">
-                {/* top part of the page */}
-                <div className="flex justify-center items-center ">
-                    <div>
-                        2390904
-                        <span> Playing</span>
-                    </div>
-                    <div>
-                        930744093
-                        <span> Games Today </span>
-                    </div>
+        <div className="landing min-h-screen bg-gradient-to-br from-black via-slate-900 to-black text-white flex flex-col">
+            {/* Top stats bar */}
+            <div className="flex justify-center items-center gap-10 py-6 text-gray-300 text-lg font-medium border-b border-white/10">
+                <div className="flex flex-col items-center">
+                    <span className="text-2xl font-bold text-white">2,390,904</span>
+                    <span className="text-sm tracking-wide uppercase">Playing Now</span>
+                </div>
+                <div className="flex flex-col items-center">
+                    <span className="text-2xl font-bold text-white">930,744,093</span>
+                    <span className="text-sm tracking-wide uppercase">Games Today</span>
+                </div>
+            </div>
+
+            {/* Main hero section */}
+            <div className="flex flex-1 items-center justify-center w-[90%] mx-auto gap-10 py-12">
+                {/* Left: background image */}
+                <div
+                    className="relative w-[50%] h-[500px] rounded-2xl shadow-2xl bg-cover bg-center overflow-hidden"
+                    style={{ backgroundImage: `url(${chessBoard})` }}
+                >
+                    {/* Overlay gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-transparent" />
                 </div>
 
-                {/* bottom part of the page */}
-                <div className="landing-container flex items-center justify-center gap-10 w-[80vw] h-[100vh] m-auto">
-                    <div
-                        className="flex justify-between items-center w-[50%] h-full shadow-lg bg-cover bg-center"
-                        style={{ backgroundImage: `url(${chessBoard})` }}
+                {/* Right: content */}
+                <div className="w-[50%] flex flex-col items-center justify-center text-center space-y-8">
+                    <div className="space-y-3">
+                        <h1 className="text-5xl font-extrabold tracking-tight drop-shadow-lg">
+                            Play Chess
+                        </h1>
+                        <p className="text-xl text-gray-300">
+                            Sharpen your mind, improve your strategy, and enjoy the game with
+                            players worldwide.
+                        </p>
+                    </div>
+
+                    <Button
+                        onClick={() => navigate("/game")}
                     >
-                        {/* Optional overlay for readability */}
-                    </div>
-                    <div className="bg-black/40 w-[50%] h-full flex items-center justify-center">
-                        <div className="text-center text-white space-y-6">
-                            <div className="content">
-                                <h2 className="text-5xl font-bold tracking-wide">Play Chess</h2>
-                                <h2 className="text-4xl opacity-90">Improve Your Game</h2>
-                                <h2 className="text-4xl opacity-90">Have Fun!</h2>
-
-                            </div>
-                            <button className="bg-slate-800 w-[90%] hover:bg-slate-800/80 px-8 py-4 rounded-lg shadow-md transition duration-300">
-                                Get Started
-                            </button>
-                        </div>
-                    </div>
-
+                        Play Online
+                    </Button>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
