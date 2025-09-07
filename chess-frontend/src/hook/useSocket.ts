@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react"
-import dotenv from "dotenv";
 
-dotenv.config();
-
-const WS_URL = process.env.WS_URL;
+const WS_URL = "ws://localhost:8080";
 
 export const useSocket = () => {
     const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -19,10 +16,18 @@ export const useSocket = () => {
             setSocket(null);
         }
 
+        wsConn.onerror = (err) => {
+            console.error("WebSocket error:", err);
+        };
+
+        setSocket(wsConn);
+
         return () => {
             wsConn.close();
+            setSocket(null);
         }
 
     }, [])
-
+    return socket;
 }
+
